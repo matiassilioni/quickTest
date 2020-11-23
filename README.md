@@ -1,6 +1,6 @@
 # quickTest
 
-Test:
+## Test:
 
 ```c#
 using System;
@@ -46,7 +46,7 @@ namespace quick_code_test
     }
 }
 ```
-#Solution
+## Solution
 
 I implemented an array of 64 bits's bitmaps, to keep track of each requested id.
 To synchronize I used SpinLock, instead of other synch mechanisms because the critical section is really small and fast, so no need to perform context switching.
