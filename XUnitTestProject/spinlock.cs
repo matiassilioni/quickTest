@@ -203,9 +203,9 @@ namespace quick_code_test
             {
                 throw new ArgumentOutOfRangeException("id");
             }
-            //Since the critical sections is really small and fast, I use SpinLock wich doesn't put the thread to sleep, 
+            //Since the critical sections is really small and fast, I used SpinLock which doesn't put the thread to sleep, 
             //so no expensive context switching is needed.
-            //Locking is also fine granulated to perform better
+            //By locking here I get fine granulated sync so performs better for parallel
             bool lockTaken = false;
             _spinlock.Enter(ref lockTaken);
 
@@ -217,31 +217,6 @@ namespace quick_code_test
 
             if (lockTaken) _spinlock.Exit(false);
             return found;
-        }
-    }
-
-    public struct BitArray64
-    {
-        public ulong Bits;
-        public bool this[int index]
-        {
-            get
-            {
-                ulong mask = 1ul << index;
-                return (Bits & mask) == mask;
-            }
-            set
-            {
-                ulong mask = 1ul << index;
-                if (value)
-                {
-                    Bits |= mask;
-                }
-                else
-                {
-                    Bits &= ~mask;
-                }
-            }
         }
     }
 }
